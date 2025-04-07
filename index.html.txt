@@ -1,0 +1,15 @@
+﻿
+
+import React, { useState, useEffect } from "react"; import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; import { Home } from "./pages/Home"; import { About } from "./pages/About"; import { Services } from "./pages/Services"; import { Navbar } from "./components/Navbar"; import { Footer } from "./components/Footer"; import { ToastContainer } from "react-toastify"; import "react-toastify/dist/ReactToastify.css"; import { ThemeProvider } from "./contexts/ThemeContext"; import NotificationSystem from "./components/NotificationSystem"; import SearchBar from "./components/SearchBar"; import ChatSupport from "./components/ChatSupport";
+
+import Blog from "./pages/Blog"; import Contact from "./pages/Contact"; import Login from "./pages/Login"; import Signup from "./pages/Signup"; import UserDashboard from "./pages/UserDashboard"; import AdminDashboard from "./pages/AdminDashboard"; import UserProfile from "./pages/UserProfile"; import PasswordReset from "./pages/PasswordReset";
+
+export default function App() { const [theme, setTheme] = useState("light");
+
+useEffect(() => { const savedTheme = localStorage.getItem("theme"); if (savedTheme) setTheme(savedTheme); }, []);
+
+const toggleTheme = () => { const newTheme = theme === "light" ? "dark" : "light"; setTheme(newTheme); localStorage.setItem("theme", newTheme); };
+
+return ( <ThemeProvider value={{ theme, toggleTheme }}> <Router> <div className={${theme} min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-800 dark:text-white}> <Navbar /> <NotificationSystem /> <SearchBar /> <main className="flex-grow"> <Routes> <Route path="/" element={<Home />} /> <Route path="/about" element={<About />} /> <Route path="/services" element={<Services />} /> <Route path="/blog" element={<Blog />} /> <Route path="/contact" element={<Contact />} /> <Route path="/login" element={<Login />} /> <Route path="/signup" element={<Signup />} /> <Route path="/user-dashboard" element={<UserDashboard />} /> <Route path="/admin-dashboard" element={<AdminDashboard />} /> <Route path="/profile" element={<UserProfile />} /> <Route path="/reset-password" element={<PasswordReset />} /> </Routes> </main> <ChatSupport /> <Footer /> <ToastContainer position="top-right" autoClose={3000} hideProgressBar theme={theme} /> </div> </Router> </ThemeProvider> ); }
+
+
